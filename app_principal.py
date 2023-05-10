@@ -93,4 +93,4 @@ class App(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main(verbosity = 2, testRunner = HTMLTestRunner(output = 'test', report_name = "logs"))
+    unittest.main(verbosity = 2, testRunner = HTMLTestRunner(output = 'test2', report_name = "logs"))

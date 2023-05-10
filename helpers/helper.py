@@ -12,7 +12,6 @@ def name_file(url):
     if match:
         # Si se encontró un match, extraemos el texto capturado
         book_name = match.group(1)
-        print(book_name) # Imprime "la-agonia-de-ser"
     else:
         print("No se encontró un match")
     

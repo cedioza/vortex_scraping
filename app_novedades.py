@@ -12,6 +12,8 @@ from pyunitreport import HTMLTestRunner
 load_dotenv()
 
 class App(unittest.TestCase):
+
+    
     
     def setUp(self):
         """
@@ -38,24 +40,20 @@ class App(unittest.TestCase):
         6. Calls the "get_pdf" method with the "urls_pdf" list to download the PDF files.
         """
         driver = self.driver
-
         driver.get(os.getenv("url"))
         arrivals = driver.find_element(By.XPATH, '//a[contains(text(), "Noveda")]')
         arrivals.click()
-
         urls = [driver.current_url] 
         urls_pdf = []
-
         pagination = driver.find_elements(By.XPATH, '//ul[@class="pagination pagination"]/li[not(@class="prev disabled") and not(@class="next")]/a')
         for pag in pagination:
             url_pag = pag.get_attribute("href")
             urls.append(url_pag)
-    
+
         for i in urls:
             urls_pdf += (self.get_urls(i))
 
         self.get_pdf(urls_pdf)
-
 
 
     def get_urls(self, url_pag):
@@ -72,12 +70,10 @@ class App(unittest.TestCase):
         driver = self.driver 
         driver.get(url_pag)
         cards_filter = driver.find_elements(By.XPATH, './/p[@class ="book__author"][contains(a/text(), "Arik Eindrok")]/..')
-
         for element in cards_filter :
             url = element.find_element(By.XPATH, './/li/a[contains(text(), "Descargar")]')
             url = url.get_attribute("href")
             urls.append(url)
-        
         return urls
 
 
@@ -90,7 +86,6 @@ class App(unittest.TestCase):
         """
         driver = self.driver 
         urls_pdf = []
-
         for url in urls :
             driver.get(url)
             download = driver.find_element(By.XPATH, '//a[contains(., "PDF")]')
@@ -98,7 +93,6 @@ class App(unittest.TestCase):
             url_pdf =  re.search(r"\'([^']+)\'", download).group(1)
             url_pdf = os.getenv("url") + url_pdf 
             urls_pdf.append(url_pdf)
-
         pdf_downloader(urls_pdf)
 
 
@@ -112,5 +106,6 @@ class App(unittest.TestCase):
     def tearDown(self):
         self.driver.quit()
 
+
 if __name__ == "__main__":
-    unittest.main(verbosity = 2, testRunner = HTMLTestRunner(output = 'vorex', report_name = "logs"))
+    unittest.main(verbosity = 2, testRunner = HTMLTestRunner(output = 'test1', report_name = "logs"))
